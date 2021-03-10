@@ -24,7 +24,8 @@ Our data looked like the image below once the initial cleaning was done but we h
 
 In order to get a GAN to train on the ingredients, we couldn't keep them all in the same column. Instead, we wanted each recipe to stay as one row, but each unique ingredient would be in its own column. If the ingredient was present in that recipe, it was marked with a 1, otherwise it was a 0. Because we lacked any measurement data, we had to stick with binary values to indicate presence instead. This meant that our data would become very sparse with multiple thousand columns used to represent each ingredient. This was done using the below code with the final product appearing as the image below.
 
-`# Do the same character removal as in the previous step, now for ingredients col
+```
+# Do the same character removal as in the previous step, now for ingredients col
 df_ings['ingredients'] = df_ings['ingredients'].apply(lambda x: ''.join([str(i).strip() for i in x if i not in ['[', ']', "'"]]))
 
 # Split on commas to make it an actual list now
@@ -39,7 +40,8 @@ for index, row in df_ings.iterrows():
 df_ings = df_ings.fillna(0)
 
 # Drop the original ingredients list
-df_ings = df_ings.drop(['ingredients'], axis=1)`
+df_ings = df_ings.drop(['ingredients'], axis=1)
+```
 
 ![concat_table](images/image02.png)
 
