@@ -57,8 +57,8 @@ For this component of the project, we decided to use a GAN, otherwise known as a
 
 ### Build the Model
 
-To build out our GAN, we started by building out each individual part: the Generator, the Descrimintator, and the GAN model which combines the two. 
-# NOAH to explain generator/descriminator
+To build out our GAN, we started by building out each individual part: the Generator, the Descrimintator, and the GAN model which combines the two.
+The generator in our model is the source of our ideal random recipe output. Random noise goes into the generator, and a random recipe is spit out. Our discriminator then comes into play. The discriminator is the driving force of learning in a GAN. Recipes are fed into the discriminator and its job is to identify whether or not the recipe fed in was a real recipe from our actual data, or a fake recipe created by the generator. These two components go back and forth with the generator trying to trick the discriminator and the discriminator trying to catch the generator. As they battle, they learn what to look for in a real recipe more clearly. In a perfect situation, the generator will be so  good at producing recipes that they are seen as potential real life recipes. This is our goal when we train the GAN model.
 
 ```
 def build_gan(generator, discriminator):
