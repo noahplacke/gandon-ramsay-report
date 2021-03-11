@@ -147,4 +147,6 @@ But as the model continued to learn, the output looked like this:
 
 ![training_output2](images/image04.png)
 
-As you can see, the list of ingredients began to converge into a list of common cooking essentials, which leads us to believe that 
+As you can see, the list of ingredients began to converge into a list of common cooking essentials and became less varied overall, which leads us to believe that mode collapse was taking place. Mode collapse is a common issue among GANs in which the generator starts producing the same output (or a small set of outputs) over and over again because it has learned to fool the descriminator with those successful outputs. Some methods to remedy mode collapse include the Wasserstein loss and the use of unrolled GANs. 
+
+We decided to try and remedy our model using the Wasserstein loss.
