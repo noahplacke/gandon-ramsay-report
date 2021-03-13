@@ -155,7 +155,7 @@ We decided to try and remedy our model using the Wasserstein loss, which, in the
 
 To solve the mode collapse issue, we had to get a little creative with the data and how we wanted to process it. Since we noticed that the GAN was learning to converge on a list of very common ingredients found across most recipes, we decided to eliminate these ingredients from the mix, and that was generally able to solve our problem. We ended up dropping the ingredient columns with a sum greater than some threshold (we tried both 50 and 75), which means that the ingredient showed up in more than 50 or 75 recipes in the dataset. As such, these dropped columns would turn out to be the ingredients we were seeing the GAN converging on, such as butter, oil, salt, sugar, flour, etc. In this way, we successfully forced the GAN to output a variety of unique combinations, and it did not converge on a single subset each time.
 
-### INSERT PHOTO OF SUCCESSFUL GAN HERE
+![successful_ingredients](images/recipes.png)
 
 ## Instructions RNN
 
@@ -165,14 +165,59 @@ To do this, we cleaned the data a little more so that we ended up with a separat
 
 ![instructions_data](images/image05.png)
 
-From the set of instructions/steps, we created a vocabulary set of unique words, and then created an index to those unique word mappings. From there, we made a word embeddings matrix by combining the word mappings index with pre-trained word vectors (GloVe). 
+From the set of instructions/steps, we created a vocabulary set of unique words, and then created an index to those unique word mappings. From there, we made a word embeddings matrix by combining the word mappings index with pre-trained word vectors (GloVe, in this case). Then we built an RNN model and tried to train it. 
 
-Unfortunately, our RNN never quite worked and we decided to approach the problem with a different tactic. We modified our approach and instead used n-gram probability distributions to generate our instructions.
+Unfortunately, in building and training our RNN, we encountered a bug we were unable to resolve. We decided to modify our approach to use n-gram probability distributions to generate our instructions.
 
-We used n-grams to look at the text as a whole, and calculate the probabilities of certain word associations. N-grams excel in natural language processing for the purpose of identifying co-occurrent words. While our RNN failed to work altogether, our n-gram approach was successful in at least generating some instructions. 
+We used n-grams to look at the text as a whole, and calculate the probabilities of certain word associations. N-grams excel in natural language processing for the purpose of identifying co-occurrent words. Here's an example of our fit method below, where the model learns the n-gram probabilities from the corpus. 
 
+```
+def fit(self, corpus, min_df=.1):
+        """Train the model on a given corpus"""
+        
+        for document in corpus:
+            # Tokenize text into words
+            self.tokens = word_tokenize(document)
+            
+            self.remove_below_min_df(min_df)
+            
+            # Create n-grams from tokens
+            ngrams = zip(*[self.tokens[i:] for i in range(self.n + 1)])
+            
+            # Get count of next token after each ngram
+            ngram_counts = defaultdict(Counter)
+            for ngram in ngrams:
+                ngram_counts[ngram[:-1]][ngram[-1]] += 1
 
-By fitting our model on steps whose recipe contains some given ingredient, we were able to get a much more reasonable output. 
+            # Normalize counts
+            for ngram, counter in ngram_counts.items():
+                s = float(sum(counter.values()))
+                self.ngram_probas[ngram] = sorted([(c,cnt/s) for c,cnt in counter.items()], key=lambda x: x[1], reverse=True)
+                
+            self.calc_token_distribution()
+```
 
+While our RNN failed to work altogether, our n-gram approach was successful in at least generating some instructions. 
 
-### INGREDIENTS TEAM to write and describe this part of the project
+![instructions_example](images/image06.png)
+
+By instead fitting our model on steps whose recipe contains some given ingredient, we were able to get a much more reasonable output. 
+
+```
+# Fit the model on the corpus with a common ingredient
+# Get steps from recipes with a certain ingredient
+ingredient = 'raspberries'
+steps_to_fit = df.loc[df[ingredient] == 1.0]['steps']
+
+# Create and fit the model
+model = N_Gram(n=3)
+model.fit(steps_to_fit.values, min_df=0)
+```
+
+![instructions_example2](images/image07.png)
+
+## Conclusion
+
+While the instructions we ended up with aren't necessarily coherent in common english, we can begin to see improvements of the model given a few adjustments. Since we started the project and each model from scratch, we were unable to resolve some of the bigger bugs we encountered. Given the time constraints, we opted for a more traditional approach and decided to lay down the groundwork for other complex models. With more time, we would hope to go more in-depth into a more customized approach, perhaps with stronger ingredient associations or more cohesive instructions. 
+
+On the GAN side of our project, we would've benefitted from having more data to work with and more time to tune the hyperparameters. However, given the constraints we faced, we are satisfied with what we were able to accomplish this semester. 
