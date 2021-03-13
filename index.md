@@ -58,7 +58,7 @@ For this component of the project, we decided to use a GAN, otherwise known as a
 ### Build the Model
 
 To build out our GAN, we started by building out each individual part: the Generator, the Descrimintator, and the GAN model which combines the two.
-The generator in our model is the source of our ideal random recipe output. Random noise goes into the generator, and a random recipe is spit out. Our discriminator then comes into play. The discriminator is the driving force of learning in a GAN. Recipes are fed into the discriminator and its job is to identify whether or not the recipe fed in was a real recipe from our actual data, or a fake recipe created by the generator. These two components go back and forth with the generator trying to trick the discriminator and the discriminator trying to catch the generator. As they battle, they learn what to look for in a real recipe more clearly. In a perfect situation, the generator will be so  good at producing recipes that they are seen as potential real life recipes. This is our goal when we train the GAN model.
+The generator in our model is the source of our ideal random recipe output. Random noise goes into the generator, and a random recipe is spit out. Our discriminator then comes into play. The discriminator is the driving force of learning in a GAN. Recipes are fed into the discriminator and its job is to identify whether or not the recipe fed in was a real recipe from our actual data, or a fake recipe created by the generator. These two components go back and forth with the generator trying to trick the discriminator and the discriminator trying to catch the generator. As they battle, they learn what to look for in a real recipe more clearly. In a perfect situation, the generator will be so good at producing recipes that they are seen as potential real life recipes. This is our goal when we train the GAN model.
 
 ```
 def build_gan(generator, discriminator):
@@ -149,9 +149,13 @@ But as the model continued to learn, the output looked like this:
 
 As you can see, the list of ingredients began to converge into a list of common cooking essentials and became less varied overall, which leads us to believe that mode collapse was taking place. Mode collapse is a common issue among GANs in which the generator starts producing the same output (or a small set of outputs) over and over again because it has learned to fool the descriminator with those successful outputs. Some methods to remedy mode collapse include the Wasserstein loss and the use of unrolled GANs. 
 
-We decided to try and remedy our model using the Wasserstein loss.
+We decided to try and remedy our model using the Wasserstein loss, which, in the end remained unsuccessful due to an unknown bug, but it helped us be more creative in the end to solve our mode collapse problem.
 
-### insert success or failure here
+### Solving Mode Collapse
+
+To solve the mode collapse issue, we had to get a little creative with the data and how we wanted to process it. Since we noticed that the GAN was learning to converge on a list of very common ingredients found across most recipes, we decided to eliminate these ingredients from the mix, and that was generally able to solve our problem. We ended up dropping the ingredient columns with a sum greater than some threshold (we tried both 50 and 75), which means that the ingredient showed up in more than 50 or 75 recipes in the dataset. As such, these dropped columns would turn out to be the ingredients we were seeing the GAN converging on, such as butter, oil, salt, sugar, flour, etc. In this way, we successfully forced the GAN to output a variety of unique combinations, and it did not converge on a single subset each time.
+
+### INSERT PHOTO OF SUCCESSFUL GAN HERE
 
 ## Instructions RNN
 
