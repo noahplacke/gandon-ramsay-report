@@ -2,7 +2,7 @@
 
 A project by Jerry Che, Jose Guerrero, Riley Moynihan, Noah Placke, Sarah Teng, & Palmer Wenzel
 
-For our final project this semester, we are creating a recipe GAN that generates recipes consisting of a list of ingredients and a list of instructions to go with those ingredients. As such, we have divided the project into two components: the Ingredients GAN and the Instructions RNN.
+For our final project this semester, we are creating a recipe GAN that generates recipes consisting of a list of ingredients and a list of instructions to go with those ingredients. As such, we have divided the project into two components: the Ingredients GAN and the Instructions n-grams.
 
 ## Data Preprocessing
 
@@ -220,6 +220,6 @@ model.fit(steps_to_fit.values, min_df=0)
 
 ## Conclusion
 
-While the instructions we ended up with aren't necessarily coherent in common english, we can begin to see improvements of the model given a few adjustments. Since we started the project and each model from scratch, we were unable to resolve some of the bigger bugs we encountered. Given the time constraints, we opted for a more traditional approach and decided to lay down the groundwork for other complex models. With more time, we would hope to go more in-depth into a more customized approach, perhaps with stronger ingredient associations or more cohesive instructions. 
+While the instructions we ended up with aren't necessarily coherent in modern english, we can begin to see improvements of the model given a few adjustments. Since we started the project and each model from scratch, we were unable to resolve some of the bigger bugs we encountered. Given the time constraints, we opted for a more traditional approach and decided to lay down the groundwork for other complex models. With more time, we would hope to go more in-depth into a more customized approach, perhaps with stronger ingredient associations or more cohesive instructions. 
 
 On the GAN side of our project, we would've benefitted from having more data to work with and more time to tune the hyperparameters. However, given the constraints we faced, we are satisfied with what we were able to accomplish this semester. 
