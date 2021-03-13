@@ -159,6 +159,34 @@ To solve the mode collapse issue, we had to get a little creative with the data 
 
 ## Instructions RNN
 
-For this component of the project, we decided to use an RNN model in the same way that image captioning works. The RNN will take in a list of ingredients (similar to the way an RNN would take in an image input) and output a generated list of instructions to complement the list of ingredients. 
+For this component of the project, we decided to use an Recurrent Neural Network model in the same way that image captioning works. The RNN will take in a list of ingredients (similar to the way an RNN would take in an image input) and output a generated list of instructions to complement the list of ingredients. 
+
+To do this, we cleaned the data a little more so that we ended up with a separated list of instructions for each recipe, and a separated set of ingredients to go with those instructions. 
+
+![instructions_data](images/image05.png)
+
+From the set of instructions/steps, we created a vocabulary set of unique words, and then created an index to those unique word mappings. 
+
+```
+#Create vocabulary of unique words.
+unique = set(steps.str.replace('[^a-zA-Z0-9 ]', '').str.split(' ').sum())
+print(f'Number of unique tokens: {len(unique)}')
+vocab_size = len(unique) + 1  # +1 for appended 0s
+# vocab_size = 16903
+
+#Create index to word mappings.
+ixtoword = {}
+wordtoix = {}
+
+ix = 1
+for w in unique:
+    wordtoix[w] = ix
+    ixtoword[ix] = w
+    ix += 1
+```
+
+
+
+
 
 ### INGREDIENTS TEAM to write and describe this part of the project
