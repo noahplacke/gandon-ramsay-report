@@ -165,28 +165,14 @@ To do this, we cleaned the data a little more so that we ended up with a separat
 
 ![instructions_data](images/image05.png)
 
-From the set of instructions/steps, we created a vocabulary set of unique words, and then created an index to those unique word mappings. 
+From the set of instructions/steps, we created a vocabulary set of unique words, and then created an index to those unique word mappings. From there, we made a word embeddings matrix by combining the word mappings index with pre-trained word vectors (GloVe). 
 
-```
-#Create vocabulary of unique words.
-unique = set(steps.str.replace('[^a-zA-Z0-9 ]', '').str.split(' ').sum())
-print(f'Number of unique tokens: {len(unique)}')
-vocab_size = len(unique) + 1  # +1 for appended 0s
-# vocab_size = 16903
+Unfortunately, our RNN never quite worked and we decided to approach the problem with a different tactic. We modified our approach and instead used n-gram probability distributions to generate our instructions.
 
-#Create index to word mappings.
-ixtoword = {}
-wordtoix = {}
-
-ix = 1
-for w in unique:
-    wordtoix[w] = ix
-    ixtoword[ix] = w
-    ix += 1
-```
+We used n-grams to look at the text as a whole, and calculate the probabilities of certain word associations. N-grams excel in natural language processing for the purpose of identifying co-occurrent words. While our RNN failed to work altogether, our n-gram approach was successful in at least generating some instructions. 
 
 
-
+By fitting our model on steps whose recipe contains some given ingredient, we were able to get a much more reasonable output. 
 
 
 ### INGREDIENTS TEAM to write and describe this part of the project
