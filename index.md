@@ -159,9 +159,9 @@ To solve the mode collapse issue, we had to get a little creative with the data 
 
 ![successful_ingredients](images/recipes.png)
 
-## Instructions RNN
+## Instructions N-Grams 
 
-For this component of the project, we decided to use an Recurrent Neural Network model in the same way that image captioning works. The RNN will take in a list of ingredients (similar to the way an RNN would take in an image input) and output a generated list of instructions to complement the list of ingredients. 
+For this component of the project, we originally decided to use an Recurrent Neural Network model in the same way that image captioning works. The RNN would take in a list of ingredients (similar to the way an RNN would take in an image input) and output a generated list of instructions to complement the list of ingredients. 
 
 To do this, we cleaned the data a little more so that we ended up with a separated list of instructions for each recipe, and a separated set of ingredients to go with those instructions. 
 
