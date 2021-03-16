@@ -1,6 +1,6 @@
 # Cognitive Computing Final Project - GANdon Ramsay 
 
-A project by Jerry Che (jc78222), Jose Guerrero, Riley Moynihan (rcm2944), Noah Placke (ntp352), Sarah Teng (st29653), & Palmer Wenzel (phw295)
+A project by Jerry Che (jc78222), Jose Guerrero(jag23868), Riley Moynihan (rcm2944), Noah Placke (ntp352), Sarah Teng (st29653), & Palmer Wenzel (phw295)
 
 For our final project this semester, we are creating a recipe GAN that generates recipes consisting of a list of ingredients and a list of instructions to go with those ingredients. As such, we have divided the project into two components: the Ingredients GAN and the Instructions n-grams.
 
